@@ -1,4 +1,4 @@
-package com.heima.utils.common;
+package com.heima.gateway.app.util;
 
 import io.jsonwebtoken.*;
 
@@ -14,6 +14,10 @@ public class AppJwtUtil {
     private static final String TOKEN_ENCRY_KEY = "MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY";
     // 最小刷新间隔(S)
     private static final int REFRESH_TIME = 300;
+
+
+    public final static int TIME_OUT_1 =1;
+    public final static int TIME_OUT_2 =2;
 
     // 生产ID
     public static String getToken(Long id){
