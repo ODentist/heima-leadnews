@@ -19,6 +19,7 @@ import com.heima.utils.common.UserIdThreadLocalUtil;
 import com.heima.wemedia.mapper.WmMaterialMapper;
 import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmNewsMaterialMapper;
+import com.heima.wemedia.service.WmAutoScanService;
 import com.heima.wemedia.service.WmNewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopContext;
@@ -49,6 +50,8 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper,WmNews> implemen
     private WmNewsMaterialMapper wmNewsMaterialMapper;
     @Autowired
     private WmMaterialMapper wmMaterialMapper;
+    @Autowired
+    private WmAutoScanService wmAutoScanService;
 
     @Override
     public ResponseResult queryNewsList(WmNewsPageReqDto reqDto) {
@@ -103,6 +106,14 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper,WmNews> implemen
         saveRelationContent(images,wmNews.getId(),WeMediaConstants.REFERENCE_CONTENT);
         //关联封面图片和素材的关系
         saveRelationCover(newsDto,images,wmNews);
+
+        //审核
+        try {
+            wmAutoScanService.autoScan(wmNews);
+        }catch (Exception e){
+            log.error("审核异常",e);
+        }
+        log.info("我要证明我先执行");
 
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }

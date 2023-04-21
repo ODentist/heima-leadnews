@@ -21,3 +21,20 @@ minio:
   bucket: leadnews
   endpoint: http://192.168.200.130:9000
   readPath: http://192.168.200.130:9000
+
+aliyun:
+  accessKeyId: LTAI5tQzPnRdawVHeyfEPg48
+  secret: DTkCHrNRyLDWz926wsQP3jdOpD36FY
+  #aliyun.scenes=porn,terrorism,ad,qrcode,live,logo
+  scenes: terrorism
+
+feign:
+  # 开启feign对hystrix熔断降级的支持
+  hystrix:
+    enabled: true
+  # 修改调用超时时间
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 2000

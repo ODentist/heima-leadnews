@@ -1,7 +1,9 @@
 package com.heima.article.controller.v1;
 
+import com.heima.apis.article.IArticleClient;
 import com.heima.article.service.ApArticleService;
 import com.heima.common.constants.ApArticleConstants;
+import com.heima.model.article.dtos.ArticleDto;
 import com.heima.model.article.dtos.ArticleHomeDto;
 import com.heima.model.common.dtos.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/v1/article")
-public class ApArticleController {
+public class ApArticleController{
 
     @Autowired
     private ApArticleService articleService;
@@ -36,5 +38,10 @@ public class ApArticleController {
     @PostMapping("/loadnew")
     public ResponseResult loadnew(@RequestBody ArticleHomeDto homeDto){
         return articleService.loadArticle(homeDto,ApArticleConstants.TYPE_NEW);
+    }
+
+    @PostMapping("/save")
+    public ResponseResult save(@RequestBody ArticleDto articleDto){
+        return articleService.save(articleDto);
     }
 }

@@ -21,12 +21,21 @@ import java.io.Serializable;
  * @author itheima
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @TableName("ap_article_config")
 @ApiModel(value="ApArticleConfig", description="APP已发布文章配置表")
 public class ApArticleConfig implements Serializable {
+
+    public ApArticleConfig(){
+
+    }
+
+    public ApArticleConfig(Long articleId){
+        this.articleId = articleId;
+        this.isDown = (short)0;
+        this.isDelete = (short)0;
+        this.isComment = (short)0;
+        this.isForward = (short)0;
+    }
 
     private static final long serialVersionUID = 1L;
 
