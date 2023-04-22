@@ -22,19 +22,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class AysncPoolConfig implements AsyncConfigurer {
 
 
-//    @Bean("asyncPool")
-//    public Executor asyncPoolExcecutor(){
-//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-//        executor.setMaxPoolSize(10);
-//        executor.setCorePoolSize(5);
-//        executor.setQueueCapacity(10);
-//        executor.setThreadNamePrefix("async-");
-//        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-//        return executor;
-//    }
-
-    @Override
-    public Executor getAsyncExecutor() {
+    @Bean("asyncPool")
+    public Executor asyncPoolExcecutor(){
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setMaxPoolSize(10);
         executor.setCorePoolSize(5);
@@ -43,4 +32,15 @@ public class AysncPoolConfig implements AsyncConfigurer {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         return executor;
     }
+
+//    @Override
+//    public Executor getAsyncExecutor() {
+//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+//        executor.setMaxPoolSize(10);
+//        executor.setCorePoolSize(5);
+//        executor.setQueueCapacity(10);
+//        executor.setThreadNamePrefix("async-");
+//        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+//        return executor;
+//    }
 }

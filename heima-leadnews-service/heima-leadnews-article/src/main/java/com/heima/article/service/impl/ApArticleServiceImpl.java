@@ -73,11 +73,6 @@ public class ApArticleServiceImpl implements ApArticleService {
             articleMapper.insert(article);
             //保存配置表
             ApArticleConfig config = new ApArticleConfig(article.getId());
-//            config.setArticleId(article.getId());
-//            config.setIsForward((short)0);
-//            config.setIsDown((short)0);
-//            config.setIsDelete((short)0);
-//            config.setIsComment((short)0);
             configMapper.insert(config);
 
 
