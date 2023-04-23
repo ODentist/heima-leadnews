@@ -197,7 +197,7 @@ public class ZipUtils {
     }
 
     public static void main(String[] args) {
-        String content = "dsfsdfdsfdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfsdfdsfdsfdsfdsdsfdsfds";
+        String content = "adfab";
         System.out.println("初始字符串的大小为："+content.getBytes().length);
 
         //压缩

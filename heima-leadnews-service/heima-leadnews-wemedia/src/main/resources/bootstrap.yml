@@ -28,6 +28,25 @@ aliyun:
   #aliyun.scenes=porn,terrorism,ad,qrcode,live,logo
   scenes: terrorism
 
+tess4j:
+  data-path: D:\heimanews\tessdata
+  language: chi_sim
+
+seata:
+  registry: # TC服务注册中心的配置，微服务根据这些信息去注册中心获取tc服务地址
+    # 参考tc服务自己的registry.conf中的配置
+    type: nacos
+    nacos: # tc
+      server-addr: 192.168.200.130:8848
+      namespace: ""
+      group: DEFAULT_GROUP
+      application: seata-tc-server # tc服务在nacos中的服务名称
+  tx-service-group: seata-auto-scan-news-tx # 事务组，根据这个获取tc服务的cluster名称
+  service:
+    vgroup-mapping:
+      seata-auto-scan-news-tx: default
+  data-source-proxy-mode: AT
+
 feign:
   # 开启feign对hystrix熔断降级的支持
   hystrix:

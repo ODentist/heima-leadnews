@@ -119,7 +119,7 @@ public class SensitiveWordUtil {
         //初始化敏感词库
         initMap(list);
 
-        String content="我是一个好人，并不会卖，也不操练法,我真的不卖冰";
+        String content="我是一个好人，并不会卖冰毒，也不操练法轮功,我真的不卖冰毒";
         //匹配内容
         Map<String, Integer> map = matchWords(content);
         System.out.println(map);
