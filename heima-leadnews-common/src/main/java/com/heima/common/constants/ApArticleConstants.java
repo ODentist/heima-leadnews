@@ -13,4 +13,6 @@ public class ApArticleConstants {
     /** 加载最新  */
     public final static int TYPE_NEW = 1;
 
+    /** 生成文章详情消息通知主题  */
+    public final static String TOPIC_CREATE_DETAIL_HTML = "TOPIC_CREATE_HTML";
 }

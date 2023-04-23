@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.heima.apis.article.IArticleClient;
 import com.heima.common.aliyun.GreenImageScan;
 import com.heima.common.aliyun.GreenTextScan;
+import com.heima.common.constants.ApArticleConstants;
 import com.heima.common.tess4j.Tess4jClient;
 import com.heima.file.service.FileStorageService;
 import com.heima.model.article.dtos.ArticleDto;
@@ -21,10 +22,10 @@ import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmSensitiveMapper;
 import com.heima.wemedia.mapper.WmUserMapper;
 import com.heima.wemedia.service.WmAutoScanService;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -33,7 +34,6 @@ import org.springframework.util.StringUtils;
 import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.util.*;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 /**
@@ -65,10 +65,11 @@ public class WmAutoScanServiceImpl implements WmAutoScanService {
     private WmSensitiveMapper wmSensitiveMapper;
     @Autowired
     private Tess4jClient tess4jClient;
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     @Override
     @Async
-    @GlobalTransactional
     public void autoScan(WmNews wmNews) {
         log.info("开始进行内容安全检测");
         if(wmNews.getStatus() != WmNews.Status.SUBMIT.getCode()){
@@ -107,7 +108,9 @@ public class WmAutoScanServiceImpl implements WmAutoScanService {
         wmNews.setArticleId(articleId);
         wmNews.setStatus(WmNews.Status.PUBLISHED.getCode());
         wmNewsMapper.updateById(wmNews);
-        //发消息
+
+        //发送消息通知
+        kafkaTemplate.send(ApArticleConstants.TOPIC_CREATE_DETAIL_HTML,articleId + "");
     }
 
     /**

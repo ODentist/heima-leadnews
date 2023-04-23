@@ -10,6 +10,16 @@ spring:
       config:
         server-addr: 192.168.200.130:8848
         file-extension: yml
+  kafka:
+    bootstrap-servers: 192.168.200.130:9092
+    producer:
+      retries: 10
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: ${spring.application.name}-test
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 mybatis-plus:
   configuration:
@@ -21,18 +31,3 @@ minio:
   bucket: leadnews
   endpoint: http://192.168.200.130:9000
   readPath: http://192.168.200.130:9000
-
-seata:
-  registry: # TC服务注册中心的配置，微服务根据这些信息去注册中心获取tc服务地址
-    # 参考tc服务自己的registry.conf中的配置
-    type: nacos
-    nacos: # tc
-      server-addr: 192.168.200.130:8848
-      namespace: ""
-      group: DEFAULT_GROUP
-      application: seata-tc-server # tc服务在nacos中的服务名称
-  tx-service-group: seata-auto-scan-news-tx # 事务组，根据这个获取tc服务的cluster名称
-  service:
-    vgroup-mapping:
-      seata-auto-scan-news-tx: default
-  data-source-proxy-mode: AT
