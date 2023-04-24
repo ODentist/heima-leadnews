@@ -1,0 +1,19 @@
+server:
+  port: 51701
+spring:
+  application:
+    name: leadnews-schedule
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.200.130:8848
+      config:
+        server-addr: 192.168.200.130:8848
+        file-extension: yml
+  redis:
+    host: 192.168.200.130
+    password: leadnews
+    port: 6379
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

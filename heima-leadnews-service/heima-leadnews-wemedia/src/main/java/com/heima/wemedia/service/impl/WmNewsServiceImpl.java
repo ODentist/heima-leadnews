@@ -19,6 +19,7 @@ import com.heima.utils.common.UserIdThreadLocalUtil;
 import com.heima.wemedia.mapper.WmMaterialMapper;
 import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmNewsMaterialMapper;
+import com.heima.wemedia.service.NewsTaskService;
 import com.heima.wemedia.service.WmAutoScanService;
 import com.heima.wemedia.service.WmNewsService;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,8 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper,WmNews> implemen
     private WmMaterialMapper wmMaterialMapper;
     @Autowired
     private WmAutoScanService wmAutoScanService;
+    @Autowired
+    private NewsTaskService newsTaskService;
 
     @Override
     public ResponseResult queryNewsList(WmNewsPageReqDto reqDto) {
@@ -107,13 +110,17 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper,WmNews> implemen
         //关联封面图片和素材的关系
         saveRelationCover(newsDto,images,wmNews);
 
-        //审核
-        try {
-            wmAutoScanService.autoScan(wmNews);
-        }catch (Exception e){
-            log.error("审核异常",e);
+        //判断如果是预约
+        if(wmNews.getPublishTime() != null){
+            newsTaskService.addTask(wmNews);
+        }else {
+            //审核
+            try {
+                wmAutoScanService.autoScan(wmNews);
+            } catch (Exception e) {
+                log.error("审核异常", e);
+            }
         }
-        log.info("我要证明我先执行");
 
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
