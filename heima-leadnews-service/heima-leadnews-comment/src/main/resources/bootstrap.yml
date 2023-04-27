@@ -1,0 +1,19 @@
+server:
+  port: 51806
+spring:
+  data:
+    mongodb:
+      host: 192.168.200.130
+      port: 27017
+      database: leadnews-comment
+  application:
+    name: leadnews-comment
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.200.130:8848
+      config:
+        server-addr: 192.168.200.130:8848
+        file-extension: yml
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

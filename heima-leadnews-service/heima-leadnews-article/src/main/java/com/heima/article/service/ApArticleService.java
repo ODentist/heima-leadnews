@@ -2,6 +2,7 @@ package com.heima.article.service;
 
 import com.heima.model.article.dtos.ArticleDto;
 import com.heima.model.article.dtos.ArticleHomeDto;
+import com.heima.model.article.dtos.ArticleInfoDto;
 import com.heima.model.common.dtos.ResponseResult;
 
 public interface ApArticleService {
@@ -19,4 +20,11 @@ public interface ApArticleService {
      * @return
      */
     ResponseResult save(ArticleDto articleDto);
+
+    /**
+     * 加载文章详情 数据回显
+     * @param dto
+     * @return
+     */
+    ResponseResult loadArticleBehavior(ArticleInfoDto dto);
 }

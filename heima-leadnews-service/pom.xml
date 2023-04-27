@@ -16,6 +16,8 @@
         <module>heima-leadnews-article</module>
         <module>heima-leadnews-wemedia</module>
         <module>heima-leadnews-schedule</module>
+        <module>heima-leadnews-behavior</module>
+        <module>heima-leadnews-comment</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

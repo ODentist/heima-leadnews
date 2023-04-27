@@ -5,6 +5,7 @@ import com.heima.article.service.ApArticleService;
 import com.heima.common.constants.ApArticleConstants;
 import com.heima.model.article.dtos.ArticleDto;
 import com.heima.model.article.dtos.ArticleHomeDto;
+import com.heima.model.article.dtos.ArticleInfoDto;
 import com.heima.model.common.dtos.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,5 +44,11 @@ public class ApArticleController{
     @PostMapping("/save")
     public ResponseResult save(@RequestBody ArticleDto articleDto){
         return articleService.save(articleDto);
+    }
+
+
+    @PostMapping("/load_article_behavior")
+    public ResponseResult loadArticleBehavior(@RequestBody ArticleInfoDto dto){
+        return articleService.loadArticleBehavior(dto);
     }
 }

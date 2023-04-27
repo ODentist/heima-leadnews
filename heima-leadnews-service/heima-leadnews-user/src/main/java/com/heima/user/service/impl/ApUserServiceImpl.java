@@ -1,6 +1,7 @@
 package com.heima.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.common.enums.AppHttpCodeEnum;
 import com.heima.model.user.dtos.LoginDto;
@@ -25,7 +26,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class ApUserServiceImpl implements ApUserService {
+public class ApUserServiceImpl extends ServiceImpl<ApUserMapper,ApUser> implements ApUserService {
 
     @Autowired
     private ApUserMapper userMapper;

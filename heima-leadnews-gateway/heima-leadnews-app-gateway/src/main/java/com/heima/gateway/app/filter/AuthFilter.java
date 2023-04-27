@@ -53,6 +53,15 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return response.setComplete();
         }
 
+        Object userId = claimsBody.get("id");
+
+        ServerHttpRequest serverHttpRequest = request.mutate().headers(httpHeaders -> {
+            httpHeaders.add("userId",userId + "");
+        }).build();
+
+        //重置header
+        exchange.mutate().request(serverHttpRequest).build();
+
         return chain.filter(exchange);
     }
 

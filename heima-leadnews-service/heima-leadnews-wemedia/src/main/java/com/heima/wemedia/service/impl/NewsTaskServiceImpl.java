@@ -46,7 +46,7 @@ public class NewsTaskServiceImpl implements NewsTaskService {
 
     }
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0 0/5 * * ?")
     public void pollTask(){
         ResponseResult result = scheduleClient.poll(20, 1);
         log.info("拉取任务返回：" + result);
