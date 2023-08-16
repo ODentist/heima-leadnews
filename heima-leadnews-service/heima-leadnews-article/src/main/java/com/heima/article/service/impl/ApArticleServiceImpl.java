@@ -1,11 +1,13 @@
 package com.heima.article.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.heima.article.mapper.ApArticleConfigMapper;
 import com.heima.article.mapper.ApArticleContentMapper;
 import com.heima.article.mapper.ApArticleMapper;
 import com.heima.article.service.ApArticleService;
 import com.heima.common.cache.CacheService;
+import com.heima.common.constants.ApArticleConstants;
 import com.heima.common.constants.BehaviorConstants;
 import com.heima.model.article.dtos.ArticleDto;
 import com.heima.model.article.dtos.ArticleHomeDto;
@@ -13,6 +15,7 @@ import com.heima.model.article.dtos.ArticleInfoDto;
 import com.heima.model.article.pojos.ApArticle;
 import com.heima.model.article.pojos.ApArticleConfig;
 import com.heima.model.article.pojos.ApArticleContent;
+import com.heima.model.article.vo.HotArticleVo;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.common.enums.AppHttpCodeEnum;
 import com.heima.model.user.pojos.ApUser;
@@ -137,5 +140,26 @@ public class ApArticleServiceImpl implements ApArticleService {
         resultMap.put("iscollection", iscollection);
 
         return ResponseResult.okResult(resultMap);
+    }
+
+
+    /**
+     * 加载文章列表
+     * @param dto
+     * @param type      1 加载更多   2 加载最新
+     * @param firstPage true 是首页  false 不是首页
+     * @return
+     */
+    @Override
+    public ResponseResult loadArticleListV2(ArticleHomeDto dto, Integer type, boolean firstPage) {
+        if(firstPage){
+            //从缓存中获取数据
+            String articleListStr = cacheService.get(ApArticleConstants.HOT_ARTICLE_FIRST_PAGE + dto.getTag());
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(articleListStr)){
+                List<HotArticleVo> hotArticleVoList = JSON.parseArray(articleListStr, HotArticleVo.class);
+                return ResponseResult.okResult(hotArticleVoList);
+            }
+        }
+        return loadArticle(dto,type);
     }
 }

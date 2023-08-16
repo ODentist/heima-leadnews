@@ -13,6 +13,18 @@ public class ApArticleConstants {
     /** 加载最新  */
     public final static int TYPE_NEW = 1;
 
+    /** 加载最新 */
+    public final static int LOAD_NEW = 1;
+
+    /** 加载更多 */
+    public final static int LOAD_MORE = 2;
+
     /** 生成文章详情消息通知主题  */
     public final static String TOPIC_CREATE_DETAIL_HTML = "TOPIC_CREATE_HTML";
+
+    public final static String TOPIC_SYNC_ES = "TOPIC_SYNC_ES";
+
+    public final static String HOT_ARTICLE_FIRST_PAGE="hot_article_first_page";
+
+    public final static String DEFAULT_TAG="__all__";
 }

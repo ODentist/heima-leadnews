@@ -1,18 +1,23 @@
 package com.heima.article.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.heima.article.mapper.ApArticleContentMapper;
 import com.heima.article.mapper.ApArticleMapper;
 import com.heima.article.service.ArticleFreemarkerService;
+import com.heima.common.constants.ApArticleConstants;
 import com.heima.file.service.FileStorageService;
 import com.heima.model.article.pojos.ApArticle;
 import com.heima.model.article.pojos.ApArticleContent;
+import com.heima.model.search.dtos.SearchArticleVo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -43,6 +48,8 @@ public class ArticleFreemarkerServiceImpl implements ArticleFreemarkerService {
 
     @Autowired
     private ApArticleMapper apArticleMapper;
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     @Override
     public void buildArticleToMinIO(Long articleId) {
@@ -81,6 +88,21 @@ public class ArticleFreemarkerServiceImpl implements ArticleFreemarkerService {
             apArticle.setStaticUrl(path);
             apArticleMapper.updateById(apArticle);
             log.info("生成静态URL并更新数据库完成");
+
+            sendEsMessage(apArticle,apArticleContent);
+        }
+    }
+
+    public void sendEsMessage(ApArticle article,ApArticleContent apArticleContent){
+        try {
+            //发送消息
+            SearchArticleVo articleVo = new SearchArticleVo();
+            BeanUtils.copyProperties(article, articleVo);
+            articleVo.setContent(apArticleContent.getContent());
+            articleVo.setAuthorId(article.getId());
+            kafkaTemplate.send(ApArticleConstants.TOPIC_SYNC_ES, JSON.toJSONString(articleVo));
+        }catch (Exception e){
+            log.error("同步到ES异常",e);
         }
     }
 }

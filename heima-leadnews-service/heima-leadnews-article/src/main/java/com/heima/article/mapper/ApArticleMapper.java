@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,5 +22,8 @@ import java.util.List;
 public interface ApArticleMapper extends BaseMapper<ApArticle> {
 
 
-    List<ApArticle> loadArticleList(@Param("dto") ArticleHomeDto dto,@Param("type") int type);
+    public List<ApArticle> loadArticleList(@Param("dto") ArticleHomeDto dto,@Param("type") int type);
+
+    public List<ApArticle> findArticleBy5days(@Param("dayParam") Date dayParam);
+
 }

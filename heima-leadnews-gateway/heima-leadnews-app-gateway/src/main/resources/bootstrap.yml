@@ -1,5 +1,5 @@
 server:
-  port: 51601
+  port: 51604
 spring:
   application:
     name: leadnews-app-gateway

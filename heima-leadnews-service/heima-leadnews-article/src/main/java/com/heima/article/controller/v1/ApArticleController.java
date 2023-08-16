@@ -26,10 +26,10 @@ public class ApArticleController{
     @Autowired
     private ApArticleService articleService;
 
-    @PostMapping("/load")
-    public ResponseResult load(@RequestBody ArticleHomeDto homeDto){
-        return articleService.loadArticle(homeDto, ApArticleConstants.TYPE_MORE);
-    }
+//    @PostMapping("/load")
+//    public ResponseResult load(@RequestBody ArticleHomeDto homeDto){
+//        return articleService.loadArticle(homeDto, ApArticleConstants.TYPE_MORE);
+//    }
 
     @PostMapping("/loadmore")
     public ResponseResult loadmore(@RequestBody ArticleHomeDto homeDto){
@@ -50,5 +50,15 @@ public class ApArticleController{
     @PostMapping("/load_article_behavior")
     public ResponseResult loadArticleBehavior(@RequestBody ArticleInfoDto dto){
         return articleService.loadArticleBehavior(dto);
+    }
+    /**
+     * 加载首页
+     * @param dto
+     * @return
+     */
+    @PostMapping("/load")
+    public ResponseResult load(@RequestBody ArticleHomeDto dto){
+        //return apArticleService.loadArticleList(dto, ArticleConstants.LOADTYPE_LOAD_MORE);
+        return articleService.loadArticleListV2(dto, ApArticleConstants.LOAD_MORE,true);
     }
 }
